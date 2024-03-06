@@ -39,4 +39,4 @@ class Courier:
         payload = data
         resp = requests.post(Urls.LOGIN_COURIER, data=payload)
         courier_id = resp.json()["id"]
-        requests.delete(f'{Urls.CREATE_COURIER}{courier_id}')
+        requests.delete(f'{Urls.CREATE_COURIER}/{courier_id}')
