@@ -11,7 +11,10 @@ class TestCreateCourier:
     def test_create_courier_success(self):
         payload = Courier.generate_data_courier()
         response = requests.post(Urls.CREATE_COURIER, data=payload)
+        Courier.delete_courier(payload)
         assert response.status_code == 201 and response.json().get('ok') == True
+
+
 
     @allure.title('Повторное создание курьера')
     @allure.description('Проверяем, что повторное создание курьера с теми же данными недоступно')
@@ -19,6 +22,7 @@ class TestCreateCourier:
         payload = Courier.generate_data_courier()
         requests.post(Urls.CREATE_COURIER, data=payload)
         response = requests.post(Urls.CREATE_COURIER, data=payload)
+        Courier.delete_courier(payload)
         assert response.status_code == 409 and response.json().get('message') == 'Этот логин уже используется. Попробуйте другой.'
 
     @allure.title('Создание курьера без обязательных полей')
